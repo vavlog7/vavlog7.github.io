@@ -1,0 +1,86 @@
+body,html{
+  margin: 0;
+  padding: 0;
+}
+.border{
+  width: 100%;
+  height: 300px;
+  border: yellow solid 5px;
+  overflow-x: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.kew{
+  width: 500px;
+  height: 300px;
+  border: solid 5px red;
+  overflow-x: hidden;
+  transform: skew(-30deg);
+  position: absolute;
+  left: -100px;
+
+}
+.foto{
+  width: 100%;
+  height: 100%;
+  background-image: url('banner-car.png');
+  position: absolute;
+  right: -50px;
+  transform: skew(30deg);
+}
+.kew2{
+  position: absolute;
+  left: 43%;
+  width: 110%;
+}
+.to{
+  max-width: 100%;
+  position: relative;
+  margin: 50px auto;
+    object-fit: fill;
+}
+img{
+  max-width: 100%;
+  object-fit: fill;
+  height: 500px;
+}
+.text{
+  position: absolute;
+  left:10%;
+  top: 70px;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  width: 320px;
+}
+.text a{
+  text-transform: none;
+  color: #d64f4f;
+}
+.divider{
+  width: 90%;
+  height: 3px;
+  background-color: #fff;
+  margin-top: -10px;
+  position: relative;
+  margin: 0 auto;
+}
+.divider:after{
+  content: '';
+  width: 15%;
+  height: 3px;
+  background-color: #d64f4f;
+  position: absolute;
+  left:50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+.to_border{
+  width: calc(100% - 20px);
+  border: solid #d64f4f 5px;
+  height: calc(100% + 10px);
+  position: absolute;
+  left: 0;
+  top: -10px;
+}
