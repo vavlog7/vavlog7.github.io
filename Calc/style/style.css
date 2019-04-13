@@ -533,13 +533,13 @@ h2 {
     text-align: left;
     width: 100%;
   }
-  p.item_colvo .plus {
+  p.item_colvo .plus{
     position: absolute;
     left: 45px;
     top: 11px;
     transform: rotate(45deg);
   }
-  p.item_colvo .minus {
+  p.item_colvo .minus{
     left: 9px;
     top: 11px;
   }
