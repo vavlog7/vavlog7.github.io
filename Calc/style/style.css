@@ -576,6 +576,20 @@ h2 {
     text-align: left;
     width: 60%;
   }
+  .for_button {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .for_button button {
+    width: 280px;
+    margin-top: 20px;
+    margin-left: 0;
+  }
+  .for_button button + button {
+    margin-top: 30px;
+    margin-left: 0;
+  }
 }
 @media screen and (max-width: 360px) {
   .container {
