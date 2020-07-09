@@ -728,6 +728,9 @@ footer {
   }
 }
 @media screen and (max-width: 768px) {
+  .top_tittle {
+    flex-direction: column;
+  }
   .container {
     max-width: 720px;
   }
@@ -754,6 +757,15 @@ footer {
   .properti {
     margin: 0 auto;
   }
+  .m_50 {
+    max-width: 100%;
+  }
+  .btn_featured {
+    max-width: 100%;
+  }
+  .featured_subtitle {
+    margin-bottom: 20px;
+  }
 }
 @media screen and (max-width: 650px) {
   .m650_none {
@@ -772,11 +784,15 @@ footer {
   .top_menu li {
     padding-top: 10px;
     padding-bottom: 10px;
+    margin-right: 0;
   }
   .btn {
     max-width: 200px;
     margin: 0 auto;
     margin-top: 20px;
+  }
+  .comit {
+    width: 75%;
   }
 }
 @media screen and (max-width: 576px) {
@@ -798,7 +814,7 @@ footer {
   .btn_project {
     display: block;
     margin-top: 20px;
-    width: 100%;
+    max-width: 100%;
   }
   .sm_none {
     display: none;
@@ -809,5 +825,36 @@ footer {
   }
   .text_comit:after {
     left: 35%;
+  }
+}
+@media screen and (max-width: 450px) {
+  .content_toogle,
+  .properti,
+  .buyers {
+    flex-direction: column;
+  }
+  .content_text {
+    margin-top: 20px;
+  }
+  .content_icon {
+    margin-right: 0;
+  }
+  .properti_icon {
+    margin-right: 0;
+  }
+  .properti_content {
+    margin-top: 20px;
+  }
+  .properti_tittle {
+    text-align: center;
+  }
+  .properti_btn a {
+    margin: 0 auto;
+  }
+  .m_50 {
+    max-width: 100%;
+  }
+  .featured_tittle {
+    text-align: center;
   }
 }

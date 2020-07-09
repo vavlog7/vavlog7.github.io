@@ -1,0 +1,137 @@
+body,
+html {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  font-size: 0;
+}
+div {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+.player {
+  background: #1e97ac;
+  width: 100%;
+  height: 100%;
+}
+.player__screen {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.play {
+  display: block;
+  border: 15px solid transparent;
+  border-left: 30px solid #fff;
+  opacity: 0.7;
+  position: relative;
+}
+.play:after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 80px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  position: absolute;
+  right: -23px;
+  bottom: -42px;
+}
+.player__body {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+.player__control-panel {
+  background: #171717;
+  height: 40px;
+  width: 100%;
+  margin-top: auto;
+}
+.player__control-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+.panel__play {
+  border: 9px solid transparent;
+  border-left: 18px solid #fff;
+}
+.panel__duration {
+  width: 100%;
+  height: 10px;
+  background: #000;
+  border-radius: 5px;
+  position: relative;
+}
+.progress {
+  display: block;
+  width: 70%;
+  background: #277eee;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 5px;
+}
+.progress:after,
+.progress:before {
+  display: block;
+  content: "";
+  width: 14px;
+  height: 14px;
+  background: #000;
+  border-radius: 50%;
+  position: absolute;
+  right: -4px;
+  top: -2px;
+}
+.progress:before {
+  width: 22px;
+  height: 22px;
+  background: #1e97ac;
+  top: -6px;
+  right: -8px;
+}
+.panel__volume {
+  display: flex;
+}
+.volume {
+  display: block;
+  border: 9px solid transparent;
+  border-right: 18px solid #fff;
+}
+.line {
+  display: block;
+  height: 14px;
+  width: 2px;
+  background: #fff;
+  margin-left: 4px;
+  position: relative;
+  top: 3px;
+}
+.line:after,
+.line:before {
+  content: "";
+  display: block;
+  height: 10px;
+  width: 2px;
+  background: #fff;
+  margin-left: 4px;
+  margin-top: 3px;
+  position: absolute;
+  left: 0;
+  top: 0px;
+}
+.line:before {
+  height: 6px;
+  top: 2px;
+  left: 4px;
+}
