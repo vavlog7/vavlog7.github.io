@@ -401,7 +401,33 @@
   </section>
 
   <section id="program" class="section">
-    <div class="grid grid-2" id="programGrid"></div>
+    <div class="grid grid-2">
+      <div class="card highlight">
+        <h2>Редактор программы</h2>
+        <p class="muted" style="margin-top:-4px">Здесь можно менять программу под себя: добавлять тренировочные дни, переименовывать их, добавлять и удалять упражнения. Старые записи из журнала не удаляются.</p>
+        <div class="row">
+          <div class="col-8"><label>Выбери день</label><select id="programEditDay"></select></div>
+          <div class="col-4"><button class="secondary" onclick="renameProgramDay()">Переименовать</button></div>
+          <div class="col-8"><label>Новое название дня</label><input id="programDayName" placeholder="Напр. День 1 · Верх тела"></div>
+          <div class="col-4"><button onclick="addProgramDay()">Добавить день</button></div>
+          <div class="col-8"><label>Новое упражнение</label><input id="programExerciseName" placeholder="Напр. Жим ногами"></div>
+          <div class="col-4"><button onclick="addProgramExercise()">Добавить упражнение</button></div>
+        </div>
+        <div class="session-actions">
+          <button class="danger" onclick="deleteProgramDay()">Удалить выбранный день</button>
+          <button class="secondary" onclick="resetProgramToDefault()">Вернуть стартовую программу</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Как пользоваться</h2>
+        <div class="advice-list">
+          <div class="advice good"><strong>Когда меняешь программу</strong><span class="muted">Просто отредактируй дни и упражнения. Новые тренировки будут записываться уже по новой программе.</span></div>
+          <div class="advice warn"><strong>Старый прогресс сохранится</strong><span class="muted">Если удалить упражнение из программы, старые записи по нему останутся в журнале и в данных.</span></div>
+          <div class="advice good"><strong>Лучше менять блоками</strong><span class="muted">Например, 6–8 недель работаешь по одной программе, потом обновляешь упражнения и продолжаешь.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-2" id="programGrid" style="margin-top:14px"></div>
   </section>
 
   <section id="progress" class="section">
@@ -506,17 +532,19 @@
 </div>
 
 <script>
-const program = {
+const defaultProgram = {
   "1 день": ["Подтягивания в гравитоне","Жим гантелей 30°","Тяга гантели к поясу","Разведение гантелей лёжа (сиси)","Выпады","Пресс"],
   "2 день": ["Жим гантелей лёжа","Тяга в блочном тренажере стоя на 1м колене","Бабочка","Пуловер","Сгибания ног лёжа или сидя","Махи в стороны (плечи)"],
   "3 день": ["Тяга штанги в наклоне","Отжимания на брусьях в гравитроне","Жим ногами","Спина в тренажере","Тяга каната к лицу","Французский жим","Подъем штанги на скамье Скотта"],
   "4 день": ["Жимчик твой любимый","Тяга верхнего блока узким хватом","Разгибания сидя","Плечи в тренажере","Молоты + канатная тяга (суперсет)"]
 };
-const allExercises = [...new Set(Object.values(program).flat())];
-const defaultData = { logs: [], weights: [], goal: {start:null,target:null}, goals: [] };
+const defaultData = { logs: [], weights: [], goal: {start:null,target:null}, goals: [], program: JSON.parse(JSON.stringify(defaultProgram)) };
+function getProgram(){ return data.program || defaultProgram; }
+function getAllExercises(){ return [...new Set(Object.values(getProgram()).flat())]; }
 let data = JSON.parse(localStorage.getItem('fitnessDashboardBrandV2') || JSON.stringify(defaultData));
 data = {...defaultData, ...data};
 if(!Array.isArray(data.goals)) data.goals = [];
+if(!data.program || typeof data.program !== 'object' || Array.isArray(data.program)) data.program = JSON.parse(JSON.stringify(defaultProgram));
 function save(){
   try{
     localStorage.setItem('fitnessDashboardBrandV2', JSON.stringify(data));
@@ -532,23 +560,25 @@ function updateStorageInfo(){
   const logs=data.logs?.length||0;
   const weights=data.weights?.length||0;
   const goals=data.goals?.length||0;
+  const days=Object.keys(data.program||{}).length;
   const size=(new Blob([JSON.stringify(data)]).size/1024).toFixed(1);
-  el.textContent=`Сохранено на этом устройстве: тренировочных записей — ${logs}, замеров веса — ${weights}, целей — ${goals}. Размер данных: ${size} KB.`;
+  el.textContent=`Сохранено на этом устройстве: тренировочных записей — ${logs}, замеров веса — ${weights}, целей — ${goals}, дней программы — ${days}. Размер данных: ${size} KB.`;
 }
 function isoToday(){ return new Date().toISOString().slice(0,10); }
 function fmtDate(d){ if(!d) return '—'; return new Date(d+'T00:00:00').toLocaleDateString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric'}); }
 function weekKey(dateStr){ const d=new Date(dateStr+'T00:00:00'); const onejan=new Date(d.getFullYear(),0,1); const week=Math.ceil((((d-onejan)/86400000)+onejan.getDay()+1)/7); return `${d.getFullYear()} · нед. ${String(week).padStart(2,'0')}`; }
 function escapeHtml(s){ return String(s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;'); }
+function escapeJs(s){ return String(s||'').replaceAll('\\','\\\\').replaceAll("'","\\'").replaceAll("\n"," "); }
 function goTab(id){ document.querySelectorAll('.tab,.section').forEach(x=>x.classList.remove('active')); document.querySelector(`[data-tab="${id}"]`).classList.add('active'); document.getElementById(id).classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); renderAll(); }
 
 function init(){
   document.getElementById('todayPill').textContent = new Date().toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'});
-  ['todayDay','logDay'].forEach(id=>document.getElementById(id).innerHTML=Object.keys(program).map(k=>`<option>${k}</option>`).join(''));
-  ['progressExercise','goalExercise'].forEach(id=>document.getElementById(id).innerHTML=allExercises.map(e=>`<option>${escapeHtml(e)}</option>`).join(''));
+  refreshProgramDependentSelects();
   document.getElementById('logDate').value=isoToday();
   document.getElementById('weightDate').value=isoToday();
   document.getElementById('todayDay').addEventListener('change', renderTodayExercises);
   document.getElementById('logDay').addEventListener('change', renderWorkoutDayForm);
+  document.getElementById('programEditDay').addEventListener('change', syncProgramEditorFields);
   document.getElementById('progressExercise').addEventListener('change', renderExerciseProgress);
   document.getElementById('progressMetric').addEventListener('change', renderExerciseProgress);
   document.getElementById('goalType').addEventListener('change', updateGoalForm);
@@ -560,6 +590,117 @@ function init(){
   renderAll();
 }
 
+
+function setSelectOptions(id, items, selected=''){
+  const el=document.getElementById(id);
+  if(!el) return;
+  const prev=selected || el.value;
+  el.innerHTML=items.map(x=>`<option value="${escapeHtml(x)}">${escapeHtml(x)}</option>`).join('');
+  if(items.includes(prev)) el.value=prev;
+}
+function refreshProgramDependentSelects(){
+  const days=Object.keys(getProgram());
+  const exercises=getAllExercises();
+  ['todayDay','logDay','programEditDay'].forEach(id=>setSelectOptions(id, days));
+  ['progressExercise','goalExercise'].forEach(id=>setSelectOptions(id, exercises));
+  syncProgramEditorFields();
+}
+function syncProgramEditorFields(){
+  const day=document.getElementById('programEditDay')?.value;
+  const nameInput=document.getElementById('programDayName');
+  if(nameInput) nameInput.value = day || '';
+}
+function addProgramDay(){
+  const input=document.getElementById('programDayName');
+  const name=(input.value||'').trim();
+  if(!name){ alert('Введи название нового дня'); return; }
+  if(getProgram()[name]){ alert('Такой день уже есть'); return; }
+  data.program[name]=[];
+  save();
+  refreshProgramDependentSelects();
+  document.getElementById('programEditDay').value=name;
+  syncProgramEditorFields();
+}
+function renameProgramDay(){
+  const oldName=document.getElementById('programEditDay').value;
+  const newName=(document.getElementById('programDayName').value||'').trim();
+  if(!oldName){ alert('Сначала выбери день'); return; }
+  if(!newName){ alert('Введи новое название дня'); return; }
+  if(oldName===newName) return;
+  if(data.program[newName]){ alert('Такой день уже есть'); return; }
+  const updated={};
+  Object.entries(data.program).forEach(([day,exs])=>{
+    updated[day===oldName?newName:day]=exs;
+  });
+  data.program=updated;
+  data.logs.forEach(l=>{ if(l.day===oldName) l.day=newName; });
+  save();
+  refreshProgramDependentSelects();
+  document.getElementById('programEditDay').value=newName;
+  syncProgramEditorFields();
+}
+function deleteProgramDay(){
+  const day=document.getElementById('programEditDay').value;
+  if(!day){ alert('Выбери день'); return; }
+  if(Object.keys(data.program).length<=1){ alert('Нельзя удалить последний день программы'); return; }
+  if(!confirm(`Удалить день "${day}" из программы? Старые записи в журнале останутся.`)) return;
+  delete data.program[day];
+  save();
+  refreshProgramDependentSelects();
+  renderWorkoutDayForm();
+}
+function addProgramExercise(){
+  const day=document.getElementById('programEditDay').value;
+  const input=document.getElementById('programExerciseName');
+  const ex=(input.value||'').trim();
+  if(!day){ alert('Выбери день'); return; }
+  if(!ex){ alert('Введи название упражнения'); return; }
+  if(data.program[day].includes(ex)){ alert('Такое упражнение уже есть в этом дне'); return; }
+  data.program[day].push(ex);
+  input.value='';
+  save();
+  refreshProgramDependentSelects();
+  renderWorkoutDayForm();
+}
+function deleteProgramExercise(day, index){
+  const ex=data.program[day]?.[index];
+  if(!ex) return;
+  if(!confirm(`Удалить упражнение "${ex}" из программы? Старые записи в журнале останутся.`)) return;
+  data.program[day].splice(index,1);
+  save();
+  refreshProgramDependentSelects();
+  renderWorkoutDayForm();
+}
+function moveProgramExercise(day,index,dir){
+  const arr=data.program[day];
+  const newIndex=index+dir;
+  if(!arr || newIndex<0 || newIndex>=arr.length) return;
+  [arr[index],arr[newIndex]]=[arr[newIndex],arr[index]];
+  save();
+  renderWorkoutDayForm();
+}
+function renameProgramExercise(day,index){
+  const current=data.program[day]?.[index];
+  if(!current) return;
+  const next=prompt('Новое название упражнения', current);
+  if(next===null) return;
+  const name=next.trim();
+  if(!name){ alert('Название не может быть пустым'); return; }
+  data.program[day][index]=name;
+  data.logs.forEach(l=>{ if(l.exercise===current) l.exercise=name; });
+  data.goals.forEach(g=>{ if(g.exercise===current) g.exercise=name; });
+  save();
+  refreshProgramDependentSelects();
+  renderWorkoutDayForm();
+}
+function resetProgramToDefault(){
+  if(!confirm('Вернуть стартовую программу? Старые записи тренировок сохранятся.')) return;
+  data.program=JSON.parse(JSON.stringify(defaultProgram));
+  save();
+  refreshProgramDependentSelects();
+  renderWorkoutDayForm();
+}
+
 function lastResultText(ex){
   const l = data.logs.filter(x=>x.exercise===ex).sort((a,b)=>b.date.localeCompare(a.date))[0];
   if(!l) return 'Пока нет записей';
@@ -567,7 +708,7 @@ function lastResultText(ex){
 }
 function renderWorkoutDayForm(){
   const day=document.getElementById('logDay').value;
-  document.getElementById('workoutDayBox').innerHTML = program[day].map((ex,i)=>`
+  document.getElementById('workoutDayBox').innerHTML = getProgram()[day].map((ex,i)=>`
     <div class="exercise-card" data-exercise="${escapeHtml(ex)}">
       <div class="exercise-card-head">
         <div>
@@ -610,7 +751,7 @@ function deleteLog(id){ data.logs=data.logs.filter(l=>l.id!==id); save(); }
 
 function renderTodayExercises(){
   const day=document.getElementById('todayDay').value;
-  document.getElementById('todayExercises').innerHTML = program[day].map((ex,i)=>`
+  document.getElementById('todayExercises').innerHTML = getProgram()[day].map((ex,i)=>`
     <div class="exercise">
       <div><b>${i+1}. ${escapeHtml(ex)}</b><span>${lastResultText(ex)}</span></div>
       <button class="secondary small" onclick="openTraining('${day}')">Записать</button>
@@ -623,13 +764,29 @@ function openTraining(day){
   renderWorkoutDayForm();
 }
 function renderProgram(){
-  document.getElementById('programGrid').innerHTML = Object.entries(program).map(([day,exs])=>`
+  const entries=Object.entries(getProgram());
+  document.getElementById('programGrid').innerHTML = entries.length ? entries.map(([day,exs])=>`
     <div class="card">
-      <h2>${day}</h2>
-      <div class="exercise-list">
-        ${exs.map((e,i)=>`<div class="exercise"><div><b>${i+1}. ${escapeHtml(e)}</b><span>Отслеживается: подходы, вес, повторы, объем</span></div><span class="tag">${data.logs.filter(l=>l.exercise===e).length} записей</span></div>`).join('')}
+      <div class="exercise-card-head">
+        <div>
+          <h2>${escapeHtml(day)}</h2>
+          <div class="muted">${exs.length} упражн. · можно редактировать</div>
+        </div>
+        <button class="secondary small" onclick="document.getElementById('programEditDay').value='${escapeJs(day)}'; syncProgramEditorFields(); window.scrollTo({top:0,behavior:'smooth'});">Редактировать</button>
       </div>
-    </div>`).join('');
+      <div class="exercise-list">
+        ${exs.length ? exs.map((e,i)=>`
+          <div class="exercise">
+            <div><b>${i+1}. ${escapeHtml(e)}</b><span>Записей: ${data.logs.filter(l=>l.exercise===e).length}</span></div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
+              <button class="secondary small" onclick="moveProgramExercise('${escapeJs(day)}',${i},-1)">↑</button>
+              <button class="secondary small" onclick="moveProgramExercise('${escapeJs(day)}',${i},1)">↓</button>
+              <button class="secondary small" onclick="renameProgramExercise('${escapeJs(day)}',${i})">Изм.</button>
+              <button class="danger small" onclick="deleteProgramExercise('${escapeJs(day)}',${i})">×</button>
+            </div>
+          </div>`).join('') : '<div class="empty">В этом дне пока нет упражнений. Выбери день сверху и добавь упражнение.</div>'}
+      </div>
+    </div>`).join('') : '<div class="empty">Пока нет тренировочных дней. Добавь первый день программы.</div>';
 }
 function renderLogs(){
   const logs=[...data.logs].sort((a,b)=>b.date.localeCompare(a.date));
@@ -837,7 +994,7 @@ function buildRecommendations(){
     items.push(adviceHtml('warn','Мало данных по весу','Добавляй вес 1 раз в неделю утром. По одному замеру нельзя честно понять темп.'));
   }
 
-  const trends=allExercises.map(exerciseTrend).filter(Boolean);
+  const trends=getAllExercises().map(exerciseTrend).filter(Boolean);
   const falling=trends.filter(t=>t.weightDiff<0 || t.volumeDiff<0);
   const growing=trends.filter(t=>t.weightDiff>0 || t.volumeDiff>0);
   if(growing.length){ score+=10; actions.push(adviceHtml('good','Где повышать','Повышай вес только в упражнениях, где есть рост объема/веса и техника нормальная. Маленькая прибавка лучше резкого скачка.')); }
