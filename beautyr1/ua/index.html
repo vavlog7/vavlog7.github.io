@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<title>VALINYTSKYI AGENCY — запускай рекламу сама</title>
+<meta name="description" content="Практичне навчання самостійному запуску реклами для beauty-майстрів: уроки, підтримка та VIP-розбір.">
+<link rel="alternate" hreflang="ru" href="../">
+<link rel="alternate" hreflang="uk" href="./">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#090909;--black-2:#111111;--red:#ef1e35;--red-dark:#d5162d;--red-soft:#fff0f2;
+  --white:#fff;--paper:#f8f7f5;--grey:#79736d;--grey-2:#a29c96;--line:#e4dfdb;
+  --line-dark:rgba(255,255,255,.13);--body:'Manrope',Arial,sans-serif;--head:'Oswald',Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);line-height:1.48;background:#161616;color:var(--black)}
+body.lock{overflow:hidden}
+a{text-decoration:none;color:inherit}
+button,input,textarea{font:inherit}
+button{cursor:pointer;border:0}
+.app{max-width:430px;width:100%;min-height:100vh;margin:0 auto;background:var(--white);position:relative;overflow:hidden;box-shadow:0 0 60px rgba(0,0,0,.32)}
+.inner{padding:0 18px}
+h1,h2{font-family:var(--head);text-transform:uppercase;line-height:1.03;letter-spacing:-.025em}
+h3{font-size:16px;line-height:1.28}
+.section{padding:54px 0}
+.dark{background:var(--black);color:#fff}
+.paper{background:var(--paper)}
+.kicker{display:flex;align-items:center;gap:10px;color:var(--grey);font-size:10px;text-transform:uppercase;font-weight:800;letter-spacing:.19em}
+.kicker::before{content:"";width:26px;height:2px;background:var(--red);display:block;flex:none}
+.dark .kicker{color:#bfb9b3}
+.title{font-size:38px;margin:13px 0 20px}
+.copy{font-size:14px;color:var(--grey)}
+.dark .copy{color:#c8c3bd}
+.btn{height:55px;width:100%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;transition:transform .15s ease;background:transparent}
+.btn:active{transform:scale(.985)}
+.btn-red{background:var(--red);color:#fff}
+.btn-black{background:var(--black);color:#fff}
+.btn-outline{color:#fff;border:1px solid rgba(255,255,255,.28)}
+.header{height:66px;position:fixed;top:0;left:50%;transform:translateX(-50%);width:min(430px,100vw);z-index:20;background:rgba(9,9,9,.94);backdrop-filter:blur(12px);border-bottom:1px solid transparent;color:#fff;padding:0 18px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.header.scrolled{border-color:var(--line-dark)}
+.header-tools{display:flex;align-items:center;gap:6px;flex:none}
+.lang-switch{height:34px;display:flex;align-items:center;border:1px solid rgba(255,255,255,.2)}
+.lang-switch a{height:100%;min-width:31px;display:grid;place-items:center;font-size:10px;font-weight:800;letter-spacing:.06em;color:#bdb8b3}
+.lang-switch a.active{background:#fff;color:var(--black)}
+@media(max-width:370px){.header{padding:0 12px}.logo b{font-size:18px}.header-tools{gap:4px}.lang-switch a{min-width:27px}.header-btn{padding:11px 8px;font-size:9px}}
+
+.logo{display:flex;flex-direction:column;line-height:1}
+.logo b{font-family:var(--head);font-size:21px;letter-spacing:.07em}
+.logo span{font-size:8px;color:var(--red);font-weight:800;letter-spacing:.46em;text-transform:uppercase;margin-top:5px}
+.header-btn{font-size:10px;font-weight:800;text-transform:uppercase;background:var(--red);color:#fff;padding:11px 11px;white-space:nowrap}
+.hero{background:var(--black);color:#fff;padding:96px 0 27px}
+.hero .kicker{margin-bottom:16px}
+.hero h1{font-size:46px;margin-bottom:17px}
+.hero h1 span{color:var(--red)}
+.hero-text{font-size:14px;color:#c7c2bc;margin-bottom:25px}
+.hero-text strong{color:#fff}
+.hero-actions{display:grid;gap:9px;margin-bottom:22px}
+.hero-proof{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.proof-card{border:1px solid var(--line-dark);background:var(--black-2);padding:13px 11px;min-height:74px}
+.proof-card b{font-family:var(--head);font-size:24px;display:block;color:var(--red);line-height:1;margin-bottom:7px;text-transform:uppercase}
+.proof-card span{font-size:10px;color:#c2bdb7;font-weight:700}
+.ticker{overflow:hidden;background:var(--red);color:#fff;padding:12px 0}
+.ticker-track{width:max-content;display:flex;gap:28px;animation:track 18s linear infinite}
+.ticker-track span{font-family:var(--head);font-size:18px;text-transform:uppercase;white-space:nowrap}
+.ticker-track span::before{content:"•";margin-right:28px}
+@keyframes track{to{transform:translateX(-50%)}}
+.cards{display:grid;gap:9px}
+.pain{border:1px solid var(--line);background:#fff;padding:16px 14px;display:grid;grid-template-columns:38px 1fr;gap:10px}
+.pain b,.module b{font-family:var(--head);color:var(--red);font-size:29px;line-height:1}
+.pain h3{margin-bottom:5px}
+.pain p{font-size:12px;color:var(--grey)}
+.modules{display:grid;gap:9px}
+.module{padding:16px 14px;border:1px solid var(--line-dark);background:var(--black-2);display:grid;grid-template-columns:42px 1fr;gap:10px}
+.module h3{font-size:14px;margin-bottom:5px}
+.module p{font-size:12px;color:#bdb7b1}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:23px}
+.tags span{font-size:11px;text-transform:uppercase;font-weight:800;border:1px solid var(--line-dark);padding:10px 9px;background:var(--black-2)}
+.results{display:grid;gap:8px;margin-top:24px}
+.result{border:1px solid var(--line);padding:15px 14px;background:#fff;display:flex;gap:11px;align-items:flex-start}
+.result::before{content:"✓";font-weight:900;color:var(--red)}
+.result span{font-size:13px;font-weight:600}
+.plans-heading{margin-bottom:22px}
+.plan{border:1px solid var(--line);background:#fff;padding:20px 16px;margin-bottom:12px}
+.plan.vip{background:var(--black);border-color:var(--black);color:#fff}
+.badge{display:inline-flex;background:var(--red-soft);color:var(--red);font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:7px 9px;margin-bottom:15px}
+.vip .badge{background:var(--red);color:#fff}
+.plan h3{font-family:var(--head);text-transform:uppercase;font-size:35px;line-height:1;margin-bottom:9px}
+.plan-desc{font-size:12px;color:var(--grey);margin-bottom:17px}
+.vip .plan-desc{color:#bdb8b3}
+.price{display:flex;align-items:baseline;gap:10px;margin-bottom:19px}
+.price strong{font-family:var(--head);font-size:53px;color:var(--red);line-height:1}
+.price strong small{font-family:var(--body);font-size:16px;font-weight:800;margin-left:3px}
+.price del{font-size:14px;color:#908984;font-weight:700}
+.plan-list{display:grid;gap:9px;padding:16px 0;margin-bottom:18px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.vip .plan-list{border-color:var(--line-dark)}
+.plan-list span{font-size:12px;display:flex;gap:8px;font-weight:600}
+.plan-list span::before{content:"✓";color:var(--red);font-weight:900}
+.sale-note{font-size:11px;color:var(--grey);margin-top:8px}
+.faq{margin-top:24px;border-top:1px solid var(--line-dark)}
+.faq-item{border-bottom:1px solid var(--line-dark)}
+.faq-btn{display:flex;align-items:center;justify-content:space-between;text-align:left;width:100%;background:none;color:#fff;font-weight:700;font-size:13px;padding:16px 0;gap:10px}
+.faq-btn i{font-style:normal;width:24px;height:24px;display:grid;place-items:center;background:var(--red);flex:none}
+.faq-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .22s ease}
+.faq-body div{min-height:0;overflow:hidden}
+.faq-body p{font-size:12px;color:#bfb9b3;padding:0 0 15px}
+.faq-item.open .faq-body{grid-template-rows:1fr}
+.faq-item.open .faq-btn i{transform:rotate(45deg)}
+.last{background:var(--red);color:#fff;padding:48px 0 56px}
+.last h2{font-size:40px;margin:14px 0 15px}
+.last p{font-size:13px;margin-bottom:23px}
+.last .btn{background:#fff;color:var(--black)}
+.footer{background:var(--black);color:#fff;padding:22px 18px 82px;border-top:1px solid var(--line-dark)}
+.footer p{color:#a9a39d;font-size:11px;margin-top:14px}
+.sticky{position:fixed;bottom:0;left:50%;transform:translateX(-50%);z-index:18;width:min(430px,100vw);background:rgba(9,9,9,.94);border-top:1px solid var(--line-dark);padding:8px 12px calc(8px + env(safe-area-inset-bottom))}
+.sticky .btn{height:48px}
+.modal{position:fixed;top:0;bottom:0;left:50%;transform:translateX(-50%);width:min(430px,100vw);z-index:50;display:none;background:rgba(0,0,0,.6)}
+.modal.open{display:flex;align-items:flex-end}
+.modal-sheet{background:#fff;color:var(--black);width:100%;max-height:calc(100dvh - 18px);overflow-y:auto;padding:22px 18px calc(22px + env(safe-area-inset-bottom));position:relative;border-radius:18px 18px 0 0}
+.modal-close{height:42px;width:42px;position:absolute;right:17px;top:16px;background:#f2efec;font-size:23px;display:grid;place-items:center}
+.modal .kicker{padding-right:46px;margin-top:7px}
+.modal h2{font-size:37px;margin:16px 0 9px}
+.modal-intro{font-size:12px;color:var(--grey);margin-bottom:18px;padding-right:5px}
+.choice-title{font-size:10px;color:var(--grey);font-weight:800;letter-spacing:.17em;text-transform:uppercase;margin-bottom:9px}
+.choices{display:grid;gap:9px;margin-bottom:14px}
+.pick{position:relative;display:block}
+.pick input{position:absolute;opacity:0;width:1px;height:1px}
+.pick-card{min-height:92px;border:1px solid var(--line);padding:13px 13px;display:grid;grid-template-columns:1fr auto;gap:5px 12px;align-items:start;position:relative;background:#fff}
+.pick-title{font-weight:800;font-size:15px;line-height:1.2;padding-left:25px;position:relative}
+.pick-title::before{content:"";position:absolute;left:0;top:1px;width:15px;height:15px;border:1.5px solid #aaa29b;border-radius:50%;background:#fff}
+.pick-sub{grid-column:1/2;font-size:11px;color:var(--grey);padding-left:25px}
+.pick-price{grid-row:1/3;grid-column:2;display:flex;flex-direction:column;align-items:flex-end;line-height:1}
+.pick-price strong{font-family:var(--head);color:var(--red);font-size:31px;white-space:nowrap}
+.pick-price del{color:#918a83;font-size:11px;font-weight:700;margin-top:5px}
+.pick input:checked + .pick-card{background:var(--red-soft);border-color:var(--red);box-shadow:inset 0 0 0 1px var(--red)}
+.pick input:checked + .pick-card .pick-title::before{border-color:var(--red);background:var(--red);box-shadow:inset 0 0 0 4px #fff}
+.pick input:focus-visible + .pick-card{outline:2px solid var(--red);outline-offset:2px}
+.selected-summary{font-size:12px;font-weight:700;background:var(--black);color:#fff;padding:11px 12px;margin-bottom:13px}
+.selected-summary strong{color:#ff4357}
+.field{display:block;width:100%;height:51px;border:1px solid var(--line);background:#fff;padding:0 13px;font-size:13px;margin-bottom:8px;color:var(--black)}
+textarea.field{height:75px;padding-top:13px;resize:none}
+.field:focus{outline:0;border-color:var(--red);box-shadow:0 0 0 2px rgba(239,30,53,.13)}
+.submit{margin-top:6px}
+.consent{text-align:center;font-size:9px;color:#9b958f;margin-top:11px}
+.success{display:none;background:var(--red-soft);border:1px solid rgba(239,30,53,.3);font-size:12px;padding:12px;margin-top:12px}
+.success.show{display:block}
+
+/* Payment flow and help actions */
+.form-actions{display:grid;gap:8px;margin-top:6px}
+.form-actions .submit{margin-top:0}
+.consult-link{border:1px solid var(--line);color:var(--black);background:#fff}
+.last .consult-link{margin-top:8px;background:transparent;color:#fff;border-color:rgba(255,255,255,.45)}
+.submit[disabled]{opacity:.6;pointer-events:none}
+.setup-error{display:none;background:#fff1f2;border:1px solid rgba(239,30,53,.3);color:#361116;font-size:11px;line-height:1.5;padding:11px 12px;margin-top:10px}
+.setup-error.show{display:block}
+@media(max-width:355px){.hero h1{font-size:41px}.title{font-size:34px}.modal h2{font-size:33px}.price strong{font-size:47px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* Додані блоки: фото, програма на 5 днів та автор. Основна стилістика збережена. */
+.hero-photo{height:270px;margin:22px 0 17px;border:1px solid var(--line-dark);background:#0d0d0d;position:relative;overflow:hidden}
+.hero-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 30%}
+.hero-photo::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(9,9,9,.66),transparent 42%),linear-gradient(110deg,rgba(239,30,53,.18),transparent 44%);z-index:1}
+.hero-photo::after{content:"";position:absolute;right:-18px;bottom:20px;width:122px;height:2px;transform:rotate(-36deg);background:var(--red);box-shadow:0 -12px 0 rgba(239,30,53,.35),0 12px 0 rgba(239,30,53,.22);z-index:2}
+.hero-photo-label{position:absolute;bottom:12px;left:12px;z-index:3;background:rgba(9,9,9,.82);border-left:2px solid var(--red);padding:7px 9px;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#fff}
+.course-days{display:grid;gap:9px}
+.day-card{border:1px solid var(--line);background:#fff;padding:15px 14px}
+.day-head{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.day-number{background:var(--red);color:#fff;font-family:var(--head);font-size:21px;line-height:1;padding:8px 10px;min-width:81px;text-align:center;text-transform:uppercase}
+.day-card p,.day-card li{font-size:12px;color:var(--grey);line-height:1.52}
+.day-card ul{list-style:none;display:grid;gap:6px}
+.day-card li{display:flex;gap:8px}
+.day-card li::before{content:"•";color:var(--red);font-weight:900;flex:none}
+.author{background:var(--black);color:#fff}
+.author-card{display:grid;gap:18px}
+.author-photo{height:290px;border:1px solid var(--line-dark);position:relative;overflow:hidden;background:var(--black-2)}
+.author-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 26%}
+.author-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(9,9,9,.58),transparent 50%)}
+.author-name{font-family:var(--head);font-size:31px;text-transform:uppercase;line-height:1.04;margin:10px 0 17px}
+.author-name span{color:var(--red)}
+.author-points{display:grid;gap:12px}
+.author-points p{font-size:13px;color:#d1ccc7;display:flex;gap:10px;line-height:1.5}
+.author-points p::before{content:"✓";height:20px;width:20px;display:grid;place-items:center;border:1px solid var(--red);border-radius:50%;color:var(--red);font-size:10px;font-weight:900;flex:none;margin-top:1px}
+.author-note{margin-top:18px;border-top:1px solid var(--line-dark);padding-top:14px;color:#a9a39d;font-size:11px}
+@media(max-width:355px){.hero-photo{height:238px}.author-photo{height:255px}.author-name{font-size:28px}}
+
+</style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1611532619914824');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1611532619914824&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+<div class="app">
+<header class="header" id="header">
+  <a class="logo" href="#top"><b>VALINYTSKYI</b><span>Agency</span></a>
+  <div class="header-tools"><nav class="lang-switch" aria-label="Вибір мови"><a href="../" lang="ru">RU</a><a class="active" href="./" aria-current="page">UA</a></nav><button class="header-btn open-modal" data-plan="basic">Тарифи</button></div>
+</header>
+<main id="top">
+  <section class="hero">
+    <div class="inner">
+      <span class="kicker">Для beauty-майстрів у всьому світі</span>
+      <h1>Запускай рекламу <span>сама</span></h1>
+      <p class="hero-text">Практичні уроки із запуску реклами для beauty-послуг. Розберетеся, як налаштовувати рекламу та отримувати заявки <strong>без постійної залежності від таргетолога.</strong></p>
+      <div class="hero-photo" aria-label="Андрій Валініцький, автор курсу">
+        <img src="../assets/author-photo.png" alt="Андрій Валініцький">
+        <div class="hero-photo-label">Андрій Валініцький · автор курсу</div>
+      </div>
+      <div class="hero-actions">
+        <button class="btn btn-red open-modal" data-plan="basic">Обрати тариф →</button>
+        <a class="btn btn-outline" href="#program">Що буде всередині</a>
+      </div>
+      <div class="hero-proof">
+        <div class="proof-card"><b>Meta Ads</b><span>Instagram та Facebook</span></div>
+        <div class="proof-card"><b>Online</b><span>З будь-якої країни</span></div>
+      </div>
+    </div>
+  </section>
+  <div class="ticker"><div class="ticker-track"><span>Реклама власноруч</span><span>Beauty business</span><span>Більше контролю</span><span>Запуск без агенції</span><span>Реклама власноруч</span><span>Beauty business</span><span>Більше контролю</span><span>Запуск без агенції</span></div></div>
+  <section class="section paper">
+    <div class="inner">
+      <span class="kicker">Знайома ситуація?</span>
+      <h2 class="title">Чому реклама лякає</h2>
+      <div class="cards">
+        <article class="pain"><b>01</b><div><h3>Не знаєте, з чого почати</h3><p>Кабінет, аудиторії, оголошення та налаштування здаються надто складними.</p></div></article>
+        <article class="pain"><b>02</b><div><h3>Уже втрачали бюджет</h3><p>Рекламу запускали, але звернення не окупали витрачені гроші.</p></div></article>
+        <article class="pain"><b>03</b><div><h3>Залежите від спеціаліста</h3><p>Кожен новий запуск вимагає шукати таргетолога і знову платити за роботу.</p></div></article>
+      </div>
+    </div>
+  </section>
+  <section class="section dark" id="program">
+    <div class="inner">
+      <span class="kicker">Програма</span>
+      <h2 class="title">Що ви опануєте</h2>
+      <div class="modules">
+        <article class="module"><b>01</b><div><h3>Підготовка до запуску</h3><p>Як вибрати послугу, офер і мету реклами.</p></div></article>
+        <article class="module"><b>02</b><div><h3>Налаштування реклами</h3><p>Крок за кроком зберете запуск у Meta Ads.</p></div></article>
+        <article class="module"><b>03</b><div><h3>Креативи й тексти</h3><p>Зрозумієте, що показувати клієнту, щоб він написав.</p></div></article>
+        <article class="module"><b>04</b><div><h3>Аналіз результату</h3><p>Навчитеся дивитися на заявки, ціну та ухвалювати рішення.</p></div></article>
+      </div>
+      <div class="tags"><span>Nails</span><span>Brows</span><span>Lashes</span><span>Hair</span><span>PMU</span><span>Cosmetology</span><span>Med Spa</span></div>
+    </div>
+  </section>
+  <section class="section paper" id="course-days">
+    <div class="inner">
+      <span class="kicker">Як проходитиме курс</span>
+      <h2 class="title">Програма на 5 днів</h2>
+      <div class="course-days">
+        <article class="day-card">
+          <div class="day-head"><span class="day-number">День 1</span><h3>План запуску реклами</h3></div>
+          <p>Покроковий план запуску реклами для б’юті-майстрів. Ви зрозумієте, із чого почати, що підготувати та як запустити рекламу самостійно без зайвої теорії.</p>
+        </article>
+        <article class="day-card">
+          <div class="day-head"><span class="day-number">День 2</span><h3>Підготовка кабінетів</h3></div>
+          <ul>
+            <li>Інтерфейс Facebook та основні розділи рекламного кабінету.</li>
+            <li>Правильні прив’язки сторінок і базові налаштування перед запуском.</li>
+          </ul>
+        </article>
+        <article class="day-card">
+          <div class="day-head"><span class="day-number">День 3</span><h3>Практичний запуск</h3></div>
+          <ul>
+            <li>Які цілі реклами найчастіше використовують у б’юті-ніші.</li>
+            <li>Покроковий запуск під кожну ціль у форматі уроку «повторюй за мною».</li>
+          </ul>
+        </article>
+        <article class="day-card">
+          <div class="day-head"><span class="day-number">День 4</span><h3>Аналіз і масштабування</h3></div>
+          <ul>
+            <li>Як аналізувати рекламну кампанію.</li>
+            <li>Що змінювати, якщо реклама не дає бажаного результату.</li>
+            <li>Як масштабувати робочу рекламу.</li>
+          </ul>
+        </article>
+        <article class="day-card">
+          <div class="day-head"><span class="day-number">День 5</span><h3>Контроль спеціаліста</h3></div>
+          <ul>
+            <li>Як обрати спеціаліста, якщо ви вирішите більше не запускати рекламу самостійно.</li>
+            <li>Як контролювати таргетолога, щоб бюджет не витрачався без результату.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section paper">
+    <div class="inner">
+      <span class="kicker">Після навчання</span>
+      <h2 class="title">Реклама під вашим контролем</h2>
+      <div class="results">
+        <div class="result"><span>Зможете самостійно запустити рекламу на свою послугу.</span></div>
+        <div class="result"><span>Розумітимете, куди йде бюджет і що змінювати в запуску.</span></div>
+        <div class="result"><span>Зможете перевіряти роботу спеціаліста, навіть якщо згодом вирішите делегувати.</span></div>
+      </div>
+    </div>
+  </section>
+  <section class="section author" id="author">
+    <div class="inner">
+      <span class="kicker">Про автора курсу</span>
+      <div class="author-card">
+        <div class="author-photo">
+          <img src="../assets/author-photo.png" alt="Андрій Валініцький">
+        </div>
+        <div>
+          <h2 class="author-name">Валініцький <span>Андрій</span></h2>
+          <div class="author-points">
+            <p>Понад 4 роки допомагаю б’юті-майстрам знаходити клієнтів на свої послуги через рекламу.</p>
+            <p>На консультаціях навчив 100+ б’юті-майстрів самостійно запускати рекламу, яка приводить клієнтів, а не лише кліки та витрачений бюджет.</p>
+            <p>Після навчання майстри розуміють, як запускати й контролювати рекламу без постійних додаткових витрат на таргетолога.</p>
+          </div>
+          <p class="author-note">Практика для beauty-майстрів, власниць студій і салонів у Європі, США, Дубаї та інших країнах.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="plans">
+    <div class="inner">
+      <div class="plans-heading">
+        <span class="kicker">Тарифи</span>
+        <h2 class="title">Оберіть формат</h2>
+        <p class="copy">Оберіть тариф, залиште контакт — і ми зв’яжемося з вами для наступного кроку.</p>
+      </div>
+      <article class="plan">
+        <span class="badge">Самостійний формат</span>
+        <h3>Я все сама</h3>
+        <p class="plan-desc">Для тих, хто хоче пройти навчання у своєму темпі та ставити запитання під час запуску.</p>
+        <div class="price"><del>150$</del><strong>100<small>$</small></strong></div>
+        <div class="plan-list"><span>Уроки в записі</span><span>Підтримка в чаті</span></div>
+        <button class="btn btn-black open-modal" data-plan="basic">Обрати «Я все сама»</button>
+      </article>
+      <article class="plan vip">
+        <span class="badge">Особистий формат</span>
+        <h3>VIP</h3>
+        <p class="plan-desc">Для майстрині, якій важливо особисто розібрати свій запуск і помилки разом зі мною.</p>
+        <div class="price"><del>300$</del><strong>200<small>$</small></strong></div>
+        <div class="plan-list"><span>Уроки в записі</span><span>Підтримка в чаті</span><span>Особистий Zoom-дзвінок зі мною</span><span>Розбір ваших проблем із запуском реклами</span></div>
+        <button class="btn btn-red open-modal" data-plan="vip">Обрати VIP</button>
+      </article>
+      <p class="sale-note">Акційна пропозиція: «Я все сама» — <s>150 $</s> 100 $, VIP — <s>300 $</s> 200 $.</p>
+    </div>
+  </section>
+  <section class="section dark">
+    <div class="inner">
+      <span class="kicker">Запитання</span>
+      <h2 class="title">Перед заявкою</h2>
+      <div class="faq">
+        <div class="faq-item"><button class="faq-btn">Чи підійде навчання новачку?<i>+</i></button><div class="faq-body"><div><p>Так. Матеріали розраховані на майстриню, яка хоче розібратися в запуску з нуля та самостійно повторити всі дії.</p></div></div></div>
+        <div class="faq-item"><button class="faq-btn">Чим VIP відрізняється від тарифу «Я все сама»?<i>+</i></button><div class="faq-body"><div><p>У VIP додано особистий Zoom-дзвінок, на якому ми розберемо саме ваш запуск, послугу та складні моменти.</p></div></div></div>
+        <div class="faq-item"><button class="faq-btn">Чи можна брати участь з іншої країни?<i>+</i></button><div class="faq-body"><div><p>Так. Навчання проходить онлайн і підходить beauty-майстрам, які працюють у Європі, США, Дубаї та інших країнах.</p></div></div></div>
+      </div>
+    </div>
+  </section>
+  <section class="last">
+    <div class="inner">
+      <span class="kicker" style="color:rgba(255,255,255,.8)">Старт</span>
+      <h2>Перестаньте залежати від чужих запусків</h2>
+      <p>Оберіть тариф, залиште контакт — і ми зв’яжемося з вами для наступного кроку. Якщо залишилися запитання, напишіть мені в Telegram.</p>
+      <button class="btn open-modal" data-plan="basic">Обрати тариф →</button>
+      <a class="btn consult-link consultation-link" href="#" rel="noopener">Отримати консультацію</a>
+    </div>
+  </section>
+</main>
+<footer class="footer">
+  <a class="logo" href="#top"><b>VALINYTSKYI</b><span>Agency</span></a>
+  <p>Практичне навчання самостійному запуску реклами для beauty-майстрів та власниць салонів.</p>
+</footer>
+<div class="sticky"><button class="btn btn-red open-modal" data-plan="basic">Обрати тариф →</button></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-sheet">
+    <button class="modal-close" id="modalClose" aria-label="Закрити">×</button>
+    <span class="kicker">Вибір тарифу</span>
+    <h2 id="modalTitle">Оберіть тариф</h2>
+    <p class="modal-intro">Оберіть формат і залиште контакт. Ми отримаємо заявку та зв’яжемося з вами для наступного кроку.</p>
+    <form id="form">
+      <p class="choice-title">Тариф участі</p>
+      <div class="choices">
+        <label class="pick">
+          <input type="radio" name="plan" value="Я все сама" data-key="basic" data-price="100 $" data-old-price="150 $" checked>
+          <span class="pick-card">
+            <span class="pick-title">Я все сама</span>
+            <span class="pick-sub">Уроки в записі + підтримка в чаті</span>
+            <span class="pick-price"><del>150 $</del><strong>100 $</strong></span>
+          </span>
+        </label>
+        <label class="pick">
+          <input type="radio" name="plan" value="VIP" data-key="vip" data-price="200 $" data-old-price="300 $">
+          <span class="pick-card">
+            <span class="pick-title">VIP</span>
+            <span class="pick-sub">Уроки + чат + особистий Zoom-розбір</span>
+            <span class="pick-price"><del>300 $</del><strong>200 $</strong></span>
+          </span>
+        </label>
+      </div>
+      <p class="selected-summary" id="selectedSummary">Ви обрали: <strong>«Я все сама» — <del>150 $</del> 100 $</strong></p>
+      <input class="field" type="text" name="name" placeholder="Ваше ім’я" required>
+      <input class="field" type="text" name="contact" placeholder="Instagram / Telegram / WhatsApp" required>
+      <div class="form-actions">
+        <button class="btn btn-red submit" id="submitButton" type="submit">Залишити заявку →</button>
+        <a class="btn consult-link consultation-link" href="#" rel="noopener">Отримати консультацію</a>
+      </div>
+      <p class="consent">Натискаючи кнопку, ви погоджуєтеся на обробку контактних даних.</p>
+      <div class="success" id="success">Заявку надіслано. Ми зв’яжемося з вами для наступного кроку.</div>
+      <div class="setup-error" id="setupError"></div>
+    </form>
+  </div>
+</div>
+</div>
+<script src="../assets/config.js"></script>
+<script>
+const PAGE_LANGUAGE = 'ua';
+const header = document.getElementById('header');
+const modal = document.getElementById('modal');
+const closeBtn = document.getElementById('modalClose');
+const form = document.getElementById('form');
+const selectedSummary = document.getElementById('selectedSummary');
+const success = document.getElementById('success');
+const setupError = document.getElementById('setupError');
+const submitButton = document.getElementById('submitButton');
+const planFields = [...document.querySelectorAll('input[name="plan"]')];
+
+function isFilled(value) {
+  return typeof value === 'string' && value.trim() !== '' && !/(ЗДЕСЬ|ТУТ|ВСТАВИТЬ|ВСТАВИТИ)/i.test(value);
+}
+function isLink(value) {
+  return isFilled(value) && /^https?:\/\//i.test(value.trim());
+}
+function updateSelected() {
+  const checked = planFields.find(field => field.checked);
+  selectedSummary.innerHTML = 'Ви обрали: <strong>«' + checked.value + '» — <del>' + checked.dataset.oldPrice + '</del> ' + checked.dataset.price + '</strong>';
+}
+function openModal(key = 'basic') {
+  const chosen = planFields.find(field => field.dataset.key === key) || planFields[0];
+  chosen.checked = true;
+  updateSelected();
+  success.classList.remove('show');
+  setupError.classList.remove('show');
+  submitButton.disabled = false;
+  submitButton.textContent = 'Залишити заявку →';
+  modal.classList.add('open');
+  document.body.classList.add('lock');
+}
+function closeModal() {
+  modal.classList.remove('open');
+  document.body.classList.remove('lock');
+}
+function openConsultation(event) {
+  event.preventDefault();
+  if (!isLink(SITE_CONFIG.bots.consultation)) {
+    openModal('basic');
+    setupError.textContent = 'Вставте посилання на чат-бота для консультації у файлі assets/config.js: SITE_CONFIG.bots.consultation.';
+    setupError.classList.add('show');
+    return;
+  }
+  window.open(SITE_CONFIG.bots.consultation, '_blank', 'noopener');
+}
+async function submitLeadToTelegram(message) {
+  const endpoint = 'https://api.telegram.org/bot' + SITE_CONFIG.telegram.botToken.trim() + '/sendMessage';
+  const body = new URLSearchParams({
+    chat_id: SITE_CONFIG.telegram.chatId.trim(),
+    text: message,
+    parse_mode: 'HTML',
+    disable_web_page_preview: 'true'
+  });
+  try {
+    await fetch(endpoint, {
+      method: 'POST',
+      mode: 'no-cors',
+      keepalive: true,
+      headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+      body
+    });
+  } catch (error) {
+    /* Якщо браузер не дозволить фоновий запит, помилку можна перевірити у консолі. */
+    console.error('Telegram send failed:', error);
+  }
+}
+function escapeTelegramHtml(value) {
+  return String(value || '—')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+function leadMessage(lead) {
+  return [
+    '🔴 <b>Нова заявка на навчання</b>',
+    '',
+    '<b>Мова:</b> UA',
+    '<b>Ім’я:</b> ' + escapeTelegramHtml(lead.name),
+    '<b>Контакт:</b> ' + escapeTelegramHtml(lead.contact),
+    '',
+    '<b>Тариф:</b> ' + escapeTelegramHtml(lead.tariff),
+    '<b>Вартість:</b> ' + escapeTelegramHtml(lead.price),
+    '',
+    '<b>Статус:</b> залишила заявку'
+  ].join('\n');
+}
+
+window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 8));
+document.querySelectorAll('.open-modal').forEach(btn => btn.addEventListener('click', () => openModal(btn.dataset.plan)));
+document.querySelectorAll('.consultation-link').forEach(link => link.addEventListener('click', openConsultation));
+planFields.forEach(field => field.addEventListener('change', updateSelected));
+closeBtn.addEventListener('click', closeModal);
+modal.addEventListener('click', event => { if (event.target === modal) closeModal(); });
+document.addEventListener('keydown', event => { if (event.key === 'Escape') closeModal(); });
+document.querySelectorAll('.faq-btn').forEach(btn => btn.addEventListener('click', () => btn.parentElement.classList.toggle('open')));
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  setupError.classList.remove('show');
+  const checked = planFields.find(field => field.checked);
+  const planKey = checked.dataset.key;
+  const missing = [];
+  if (!isFilled(SITE_CONFIG.telegram.botToken)) missing.push('токен Telegram-бота');
+  if (!isFilled(SITE_CONFIG.telegram.chatId)) missing.push('ID Telegram-групи');
+  if (missing.length) {
+    setupError.textContent = 'Перед тестом вставте ' + missing.join(', ') + ' у файл assets/config.js.';
+    setupError.classList.add('show');
+    return;
+  }
+  const data = new FormData(form);
+  const lead = {
+    tariff: checked.value,
+    price: checked.dataset.price + (document.documentElement.lang === 'uk' ? ' (стара ціна ' : ' (старая цена ') + checked.dataset.oldPrice + ')',
+    name: (data.get('name') || '').trim(),
+    contact: (data.get('contact') || '').trim()
+  };
+  submitButton.disabled = true;
+  submitButton.textContent = 'Надсилаємо заявку…';
+  success.textContent = 'Контакт збережено. Ми зв’яжемося з вами для наступного кроку.';
+  success.classList.add('show');
+  if (typeof fbq === 'function') {
+    fbq('track', 'Lead');
+  }
+  submitLeadToTelegram(leadMessage(lead)).finally(() => {
+    submitButton.textContent = 'Заявку надіслано';
+  });
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Оплату здійснено — VALINYTSKYI AGENCY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--black:#090909;--red:#ef1e35;--red-soft:#fff0f2;--paper:#fff;--grey:#6c6763;--line:#e4ded9;--head:'Oswald',Arial,sans-serif;--body:'Manrope',Arial,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0} body{background:#121212;color:var(--black);font-family:var(--body);line-height:1.45} a{text-decoration:none;color:inherit}
+.page{max-width:430px;min-height:100vh;margin:0 auto;background:var(--paper);display:flex;flex-direction:column;box-shadow:0 0 70px rgba(0,0,0,.45)}
+.header{height:66px;background:var(--black);color:#fff;padding:0 18px;display:flex;align-items:center;justify-content:space-between}.logo{display:flex;flex-direction:column;line-height:1}.logo b{font-family:var(--head);font-size:22px;letter-spacing:.07em}.logo span{font-size:8px;color:var(--red);font-weight:800;letter-spacing:.46em;text-transform:uppercase;margin-top:5px}
+.main{padding:68px 18px 42px;flex:1}.check{width:58px;height:58px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-size:28px;font-weight:800;margin-bottom:27px}.kicker{font-size:10px;text-transform:uppercase;letter-spacing:.19em;color:var(--red);font-weight:800;margin-bottom:14px;display:block}.title{font-family:var(--head);font-size:48px;text-transform:uppercase;line-height:1.02;letter-spacing:-.025em;margin-bottom:18px}.text{font-size:14px;color:var(--grey);margin-bottom:28px}.card{border:1px solid var(--line);background:var(--red-soft);padding:17px 15px;margin-bottom:20px}.card b{display:block;font-size:14px;margin-bottom:5px}.card p{font-size:12px;color:var(--grey)}.btn{height:56px;width:100%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;background:var(--red);color:#fff;margin-bottom:9px}.btn.secondary{background:transparent;color:var(--black);border:1px solid var(--line)}.foot{background:var(--black);color:#9f9892;font-size:11px;padding:20px 18px 25px}
+</style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1611532619914824');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1611532619914824&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body><div class="page"><header class="header"><a class="logo" href="../../"><b>VALINYTSKYI</b><span>Agency</span></a></header>
+<main class="main"><div class="check">✓</div><span class="kicker">Оплату здійснено</span><h1 class="title">Ласкаво просимо<br>до навчання</h1><p class="text">Доступ до уроків відкривається через Telegram-бота. Натисніть кнопку нижче, щоб перейти до першого кроку.</p><div class="card"><b>Що далі</b><p>У боті ви отримаєте уроки, інструкції та підтримку відповідно до обраного тарифу.</p></div><a class="btn" id="trainingButton" href="#">Розпочати навчання →</a><a class="btn secondary" id="consultButton" href="#">Отримати консультацію</a></main><footer class="foot">VALINYTSKYI AGENCY · Online education for beauty business</footer></div>
+<script src="../../assets/config.js"></script>
+<script>
+function isBotLink(value) {
+  return typeof value === 'string' && /^https?:\/\//i.test(value) && !/(ЗДЕСЬ|ТУТ|ВСТАВИТЬ|ВСТАВИТИ)/i.test(value);
+}
+function setBotLink(id, url, warning) {
+  document.getElementById(id).addEventListener('click', event => {
+    event.preventDefault();
+    if (!isBotLink(url)) {
+      alert(warning);
+      return;
+    }
+    window.location.href = url;
+  });
+}
+setBotLink('trainingButton', SITE_CONFIG.bots.training, 'Вставте посилання на Telegram-бота з навчанням у файлі assets/config.js: SITE_CONFIG.bots.training.');
+setBotLink('consultButton', SITE_CONFIG.bots.consultation, 'Вставте посилання на Telegram-бота для консультації у файлі assets/config.js: SITE_CONFIG.bots.consultation.');
+</script></body></html>
